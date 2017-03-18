@@ -9,7 +9,3 @@ deploy:
   app: quiet-ravine-16218
   on:
     repo: VMoniz/projet
-notifications:
-  slack:
-    on_success: never
-    on_failure: never
