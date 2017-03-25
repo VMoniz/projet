@@ -39,5 +39,5 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'nominatim'
+gem 'nominatim', '~> 0.0.6'
 
