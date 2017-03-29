@@ -23,7 +23,8 @@ class CitiesController < ApplicationController
             weather = true
           end
           if todayForecast.temperature
-            @weatherTemperature = toCelsus(todayForecast.temperature)
+            weather_io = toCelsus(todayForecast.temperature)
+            @weatherTemperature = weather_io.round(2);
             temperature = true
           end
         end
