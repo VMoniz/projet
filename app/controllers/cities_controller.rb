@@ -5,12 +5,39 @@ class CitiesController < ApplicationController
   # GET /cities.json
   def index
     @cities = City.all
+    
+    
   end
 
   # GET /cities/1
   # GET /cities/1.json
   def show
+      forecast = ForecastIO.forecast(@city.lattitude, @city.longitude)
+      weather = false
+      temperature = false
+      if forecast
+        todayForecast = forecast.currently
+        if todayForecast
+          if todayForecast.summary
+            @weatherToday = todayForecast.summary
+            weather = true
+          end
+          if todayForecast.temperature
+            @weatherTemperature = toCelsus(todayForecast.temperature)
+            temperature = true
+          end
+        end
+      end
+      if !weather
+        @weatherSummary = "Unavailable"
+      end
+      if !temperature
+        @weatherTemperature = "Unavailable"
+      end
   end
+  
+  
+  
 
   # GET /cities/new
   def new
@@ -35,6 +62,15 @@ class CitiesController < ApplicationController
         format.json { render json: @city.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  
+  def toCelsus(fahrenheitTemperature)
+      if fahrenheitTemperature
+        return (fahrenheitTemperature - 32.0) * 5.0 / 9.0
+      else
+        return nil
+      end
   end
 
   # PATCH/PUT /cities/1

@@ -15,5 +15,15 @@
   <%= @city.longitude %>
 </p>
 
+<p>
+  <strong>Weather:</strong>
+  <%= @weatherToday %>
+</p>
+
+<p>
+  <strong>Temperature:</strong>
+  <%= '%.2f' % @weatherTemperature %> &deg;C
+</p>
+
 <%= link_to 'Edit', edit_city_path(@city) %> |
 <%= link_to 'Back', cities_path %>
