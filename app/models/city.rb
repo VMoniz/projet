@@ -1,6 +1,25 @@
 class City < ActiveRecord::Base
   before_validation :geocode
   
+  def meteo
+    forecast = ForecastIO.forecast(self.lattitude, self.longitude)
+    todayForecast = forecast.currently.summary
+  end
+  
+  def degre
+    forecast = ForecastIO.forecast(self.lattitude, self.longitude)
+    weather_io = toCelsus(forecast.currently.temperature)
+    weather_io = weather_io.round(2)
+  end 
+  
+  def toCelsus(fahrenheitTemperature)
+      if fahrenheitTemperature
+        return (fahrenheitTemperature - 32.0) * 5.0 / 9.0
+      else
+        return nil
+      end
+  end
+  
   private 
   def geocode
     if attribute_present?("name")
@@ -13,6 +32,7 @@ class City < ActiveRecord::Base
     end
   end
   
-
   
+      
 end
+
