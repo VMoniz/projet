@@ -8,17 +8,9 @@ class City < ActiveRecord::Base
   
   def degre
     forecast = ForecastIO.forecast(self.lattitude, self.longitude)
-    weather_io = toCelsus(forecast.currently.temperature)
+    weather_io = forecast.currently.temperature
     weather_io = weather_io.round(2)
   end 
-  
-  def toCelsus(fahrenheitTemperature)
-      if fahrenheitTemperature
-        return (fahrenheitTemperature - 32.0) * 5.0 / 9.0
-      else
-        return nil
-      end
-  end
   
   private 
   def geocode
